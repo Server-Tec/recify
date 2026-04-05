@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recify Quantum - Demo</title>
+    <link rel="icon" type="image/svg+xml" href="favicon.svg">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #020202 0%, #0a0a0a 100%);
+            color: #ffffff;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        .header {
+            text-align: center;
+            padding: 40px 0;
+            background: rgba(0, 212, 255, 0.1);
+            border-radius: 20px;
+            margin-bottom: 30px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(0, 212, 255, 0.2);
+        }
+        
+        .logo {
+            font-size: 3rem;
+            font-weight: bold;
+            background: linear-gradient(45deg, #00D4FF, #FF0080);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            color: #00D4FF;
+            opacity: 0.8;
+        }
+        
+        .tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 30px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 5px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .tab {
+            padding: 15px 30px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+        
+        .tab.active {
+            background: #00D4FF;
+            color: #020202;
+            box-shadow: 0 4px 15px rgba(0, 212, 255, 0.3);
+        }
+        
+        .tab:hover {
+            background: rgba(0, 212, 255, 0.1);
+        }
+        
+        .content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+        }
+        
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.2);
+        }
+        
+        .card-icon {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            display: block;
+        }
+        
+        .card-title {
+            font-size: 1.3rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: #00D4FF;
+        }
+        
+        .card-description {
+            color: #cccccc;
+            line-height: 1.6;
+        }
+        
+        .ai-section {
+            grid-column: 1 / -1;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1), rgba(255, 0, 128, 0.1));
+            border: 1px solid rgba(0, 212, 255, 0.3);
+            text-align: center;
+            padding: 40px 20px;
+        }
+        
+        .ai-title {
+            font-size: 2rem;
+            margin-bottom: 20px;
+            background: linear-gradient(45deg, #00D4FF, #FF0080);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .ai-features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        .feature-item {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .feature-icon {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            display: block;
+        }
+        
+        .status {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 212, 255, 0.9);
+            color: #020202;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: bold;
+            box-shadow: 0 4px 15px rgba(0, 212, 255, 0.3);
+        }
+        
+        @keyframes pulse {
+            0% {
+                transform: scale(1);
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="status pulse">🚀 Recify Quantum Demo</div>
+
+    <div class="container">
+        <div class="header">
+            <div class="logo">Recify Quantum</div>
+            <div class="subtitle">AI-powered healthy recipe app for biohacking and optimal nutrition</div>
+        </div>
+
+        <div class="tabs">
+            <div class="tab active">Bio</div>
+            <div class="tab">Recipes</div>
+            <div class="tab">Favorites</div>
+            <div class="tab">AI 🤖</div>
+        </div>
+
+        <div class="content">
+            <div class="card">
+                <span class="card-icon">📊</span>
+                <div class="card-title">Bio-Monitoring</div>
+                <div class="card-description">
+                    Verfolge deine Gesundheitsdaten und optimiere deine Ernährung basierend auf wissenschaftlichen Erkenntnissen.
+                </div>
+            </div>
+
+            <div class="card">
+                <span class="card-icon">🍽️</span>
+                <div class="card-title">50+ Rezepte</div>
+                <div class="card-description">
+                    Sorgfältig zusammengestellte Rezepte mit detaillierten Nährwertangaben und Gesundheitsvorteilen.
+                </div>
+            </div>
+
+            <div class="card">
+                <span class="card-icon">❤️</span>
+                <div class="card-title">Favoriten-System</div>
+                <div class="card-description">
+                    Speichere deine Lieblingsrezepte und erstelle personalisierte Mahlzeitenpläne.
+                </div>
+            </div>
+
+            <div class="card">
+                <span class="card-icon">🌙</span>
+                <div class="card-title">Quantum Design</div>
+                <div class="card-description">
+                    Moderne UI mit Glas-Effekten, Neon-Design und dunklem Theme für optimale Benutzererfahrung.
+                </div>
+            </div>
+
+            <div class="ai-section">
+                <div class="ai-title">🧠 KI-gestützte Funktionen</div>
+                <p style="color: #cccccc; margin-bottom: 30px; font-size: 1.1rem;">
+                    Entdecke die Zukunft der Ernährung mit unseren fortschrittlichen KI-Features
+                </p>
+
+                <div class="ai-features">
+                    <div class="feature-item">
+                        <span class="feature-icon">📸</span>
+                        <strong style="color: #00D4FF;">Zutaten-Erkennung</strong><br>
+                        <span style="color: #cccccc; font-size: 0.9rem;">Mache ein Foto deiner Zutaten und erhalte personalisierte Rezeptvorschläge</span>
+                    </div>
+
+                    <div class="feature-item">
+                        <span class="feature-icon">🧠</span>
+                        <strong style="color: #00D4FF;">Nährwert-Analyse</strong><br>
+                        <span style="color: #cccccc; font-size: 0.9rem;">Detaillierte KI-basierte Analyse der Nährwerte mit Gesundheitsbewertung</span>
+                    </div>
+
+                    <div class="feature-item">
+                        <span class="feature-icon">🔊</span>
+                        <strong style="color: #00D4FF;">Sprachausgabe</strong><br>
+                        <span style="color: #cccccc; font-size: 0.9rem;">Lass dir Rezepte vorlesen während du kochst</span>
+                    </div>
+
+                    <div class="feature-item">
+                        <span class="feature-icon">🎯</span>
+                        <strong style="color: #00D4FF;">Persönliche Empfehlungen</strong><br>
+                        <span style="color: #cccccc; font-size: 0.9rem;">KI-generierte Vorschläge basierend auf deinen Vorlieben</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Tab-Funktionalität
+        const tabs = document.querySelectorAll('.tab');
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                tabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+            });
+        });
+
+        // Demo-Animation
+        setInterval(() => {
+            const cards = document.querySelectorAll('.card');
+            const randomCard = cards[Math.floor(Math.random() * cards.length)];
+            randomCard.style.transform = 'translateY(-10px)';
+            setTimeout(() => {
+                randomCard.style.transform = 'translateY(0)';
+            }, 1000);
+        }, 3000);
+    </script>
+</body>
+
+</html>

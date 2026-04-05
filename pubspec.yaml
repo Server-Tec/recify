@@ -1,0 +1,47 @@
+name: recify
+description: Quantum-inspired healthy recipe app for biohacking and optimal nutrition. Features 50+ recipes with detailed macros and health benefits.
+publish_to: none
+version: 1.0.0+1
+
+environment:
+  sdk: ">=3.1.0 <4.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+  provider: ^6.0.5
+  shared_preferences: ^2.2.2
+  camera: ^0.10.5+9
+  google_ml_kit: ^0.18.0
+  flutter_tts: ^4.0.2
+  http: ^1.1.0
+  image_picker: ^1.0.7
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^3.0.0
+  build_runner: ^2.4.0
+  build_web_compilers: ^4.0.4
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/images/
+    - assets/icons/
+
+  fonts:
+    - family: Quantum
+      fonts:
+        - asset: assets/fonts/quantum.ttf
+          weight: 400
+        - asset: assets/fonts/quantum_bold.ttf
+          weight: 700
+
+flutter_icons:
+  android: true
+  ios: true
+  image_path: "assets/icons/app_icon.png"
+  adaptive_icon_background: "#020202"
+  adaptive_icon_foreground: "assets/icons/app_icon_foreground.png"

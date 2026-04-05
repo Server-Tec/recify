@@ -1,0 +1,3 @@
+# Platzhalter für favicon.png
+# Für ein echtes Icon erstelle eine 32x32 oder 64x64 PNG-Datei
+# und ersetze diese Datei

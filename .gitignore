@@ -1,0 +1,56 @@
+# Flutter
+.dart_tool/
+.packages
+.pub/
+build/
+flutter_*.iml
+
+# Android
+android/app/src/main/java/io/flutter/plugins/GeneratedPluginRegistrant.java
+android/.gradle/
+android/app/build/
+android/gradle.properties
+android/local.properties
+
+# iOS
+ios/Flutter/Flutter.podspec
+ios/Pods/
+ios/.symlinks/
+ios/Flutter/Generated.xcconfig
+ios/Flutter/app.flx
+ios/Flutter/app.zip
+ios/Flutter/flutter_assets/
+ios/ServiceDefinitions.json
+ios/Runner/GeneratedPluginRegistrant.*
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Local config
+local.properties
+
+# Test coverage
+coverage/
+
+# Screenshots for store
+screenshots/
+
+# Build artifacts
+*.apk
+*.aab
+*.ipa
+
+# Firebase (falls später verwendet)
+google-services.json
+GoogleService-Info.plist
+
+# Environment variables
+.env
+.env.local
