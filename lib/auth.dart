@@ -1,34 +1,72 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:provider/provider.dart';
 
-class AuthProvider extends ChangeNotifier {
-  final FirebaseAuth _auth = FirebaseAuth.instance;
-  User? _user;
+// Import Firebase nur wenn verwendet
+import '../main.dart' show USE_FIREBASE;
+import 'package:firebase_auth/firebase_auth.dart' if (USE_FIREBASE) 'package:firebase_auth/firebase_auth.dart';
 
-  User? get user => _user;
+class AuthProvider extends ChangeNotifier {
+  dynamic _user;
+
+  dynamic get user => _user;
 
   AuthProvider() {
-    _auth.authStateChanges().listen((User? user) {
-      _user = user;
+    if (USE_FIREBASE) {
+      // Firebase-Version
+      final FirebaseAuth _auth = FirebaseAuth.instance;
+      _auth.authStateChanges().listen((User? user) {
+        _user = user;
+        notifyListeners();
+      });
+    } else {
+      // Demo-Version - automatisch eingeloggt
+      _user = DemoUser(email: 'demo@recify.com', displayName: 'Demo User');
       notifyListeners();
-    });
+    }
   }
 
   Future<void> signIn(String email, String password) async {
-    await _auth.signInWithEmailAndPassword(email: email, password: password);
+    if (USE_FIREBASE) {
+      final FirebaseAuth _auth = FirebaseAuth.instance;
+      await _auth.signInWithEmailAndPassword(email: email, password: password);
+    } else {
+      // Demo-Version - immer erfolgreich
+      _user = DemoUser(email: email, displayName: 'Demo User');
+      notifyListeners();
+    }
   }
 
   Future<void> signUp(String email, String password) async {
-    await _auth.createUserWithEmailAndPassword(
-      email: email,
-      password: password,
-    );
+    if (USE_FIREBASE) {
+      final FirebaseAuth _auth = FirebaseAuth.instance;
+      await _auth.createUserWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+    } else {
+      // Demo-Version - immer erfolgreich
+      _user = DemoUser(email: email, displayName: 'Demo User');
+      notifyListeners();
+    }
   }
 
   Future<void> signOut() async {
-    await _auth.signOut();
+    if (USE_FIREBASE) {
+      final FirebaseAuth _auth = FirebaseAuth.instance;
+      await _auth.signOut();
+    } else {
+      // Demo-Version - bleibt eingeloggt
+      // Kann für Demo-Zwecke auskommentiert werden
+    }
   }
+}
+
+// Demo User Klasse für Firebase-freie Version
+class DemoUser {
+  final String email;
+  final String displayName;
+
+  DemoUser({required this.email, required this.displayName});
 }
 
 class AuthPage extends StatefulWidget {

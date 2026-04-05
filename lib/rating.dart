@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+// Import Firebase nur wenn verwendet
+import '../main.dart' show USE_FIREBASE;
+import 'package:cloud_firestore/cloud_firestore.dart' if (USE_FIREBASE) 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart' if (USE_FIREBASE) 'package:firebase_auth/firebase_auth.dart';
 
 class RatingWidget extends StatefulWidget {
   final String recipeId;
@@ -23,6 +27,14 @@ class _RatingWidgetState extends State<RatingWidget> {
   }
 
   Future<void> _loadRating() async {
+    if (USE_FIREBASE) {
+      await _loadRatingFirebase();
+    } else {
+      await _loadRatingLocal();
+    }
+  }
+
+  Future<void> _loadRatingFirebase() async {
     final user = FirebaseAuth.instance.currentUser;
     if (user == null) return;
 
@@ -54,7 +66,28 @@ class _RatingWidgetState extends State<RatingWidget> {
     }
   }
 
-  Future<void> _submitRating(double rating) async {
+  Future<void> _loadRatingLocal() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    // Load user's rating
+    _userRating = prefs.getDouble('rating_${widget.recipeId}') ?? 0;
+
+    // Load average rating (vereinfacht - nur eine Bewertung pro Rezept)
+    _averageRating = _userRating;
+    _ratingCount = _userRating > 0 ? 1 : 0;
+
+    setState(() {});
+  }
+
+  Future<void> _saveRating(double rating) async {
+    if (USE_FIREBASE) {
+      await _saveRatingFirebase(rating);
+    } else {
+      await _saveRatingLocal(rating);
+    }
+  }
+
+  Future<void> _saveRatingFirebase(double rating) async {
     final user = FirebaseAuth.instance.currentUser;
     if (user == null) return;
 
@@ -62,14 +95,25 @@ class _RatingWidgetState extends State<RatingWidget> {
         .collection('ratings')
         .doc('${widget.recipeId}_${user.uid}')
         .set({
-          'recipeId': widget.recipeId,
-          'userId': user.uid,
-          'rating': rating,
-          'timestamp': FieldValue.serverTimestamp(),
-        });
+      'recipeId': widget.recipeId,
+      'userId': user.uid,
+      'rating': rating,
+      'timestamp': FieldValue.serverTimestamp(),
+    });
 
-    setState(() => _userRating = rating);
-    _loadRating(); // Reload average
+    // Reload to update average
+    await _loadRating();
+  }
+
+  Future<void> _saveRatingLocal(double rating) async {
+    final prefs = await SharedPreferences.getInstance();
+    await prefs.setDouble('rating_${widget.recipeId}', rating);
+
+    setState(() {
+      _userRating = rating;
+      _averageRating = rating;
+      _ratingCount = rating > 0 ? 1 : 0;
+    });
   }
 
   @override
@@ -89,7 +133,7 @@ class _RatingWidgetState extends State<RatingWidget> {
                 index < _userRating ? Icons.star : Icons.star_border,
                 color: Colors.amber,
               ),
-              onPressed: () => _submitRating(index + 1.0),
+              onPressed: () => _saveRating(index + 1.0),
             );
           }),
         ),

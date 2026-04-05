@@ -1,14 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'firebase_options.dart';
 import 'auth.dart';
 import 'rating.dart';
 
+// Firebase aktivieren/deaktivieren - für einfache Demo-Version
+const bool USE_FIREBASE = false;
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+
+  if (USE_FIREBASE) {
+    // Firebase-Version - erfordert Firebase-Setup
+    // import 'package:firebase_core/firebase_core.dart';
+    // import 'firebase_options.dart';
+    // await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  }
+
   runApp(
     ChangeNotifierProvider(
       create: (context) => AuthProvider(),
