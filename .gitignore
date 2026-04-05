@@ -54,3 +54,6 @@ GoogleService-Info.plist
 # Environment variables
 .env
 .env.local
+
+# Local tools and portable binaries
+tools/
